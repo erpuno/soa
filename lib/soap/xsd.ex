@@ -37,7 +37,7 @@ defmodule Soap.Xsd do
   defp parse_xsd(xsd) do
     parsed_response = %{
       simple_types: get_simple_types(xsd),
-      complex_types: Type.get_complex_types(xsd, "//xsd:schema/xsd:complexType")
+      complex_types: Type.get_complex_types(xsd, "//xs:schema/xs:complexType")
     }
 
     {:ok, parsed_response}
@@ -47,26 +47,26 @@ defmodule Soap.Xsd do
   defp get_simple_types(wsdl) do
     wsdl
     |> xpath(
-      ~x"//xsd:schema/xsd:simpleType"l,
+      ~x"//xs:schema/xs:simpleType"l,
       name: ~x"./@name"s,
       restriction: [
-        ~x"./xsd:restriction"o,
+        ~x"./xs:restriction"o,
         base: ~x"./@base"s,
-        min_inclusive: ~x"./xsd:minInclusive/@value"io,
-        max_inclusive: ~x"./xsd:maxInclusive/@value"io,
-        max_length: ~x"./xsd:maxLength/@value"io,
-        total_digits: ~x"./xsd:totalDigits/@value"io,
-        fraction_digits: ~x"./xsd:fractionDigits/@value"io,
-        pattern: ~x"./xsd:pattern/@value"so,
-        enumeration: ~x"./xsd:enumeration/@value"lso
+        min_inclusive: ~x"./xs:minInclusive/@value"s,
+        max_inclusive: ~x"./xs:maxInclusive/@value"s,
+        max_length: ~x"./xs:maxLength/@value"io,
+        total_digits: ~x"./xs:totalDigits/@value"io,
+        fraction_digits: ~x"./xs:fractionDigits/@value"io,
+        pattern: ~x"./xs:pattern/@value"so,
+        enumeration: ~x"./xs:enumeration/@value"lso
       ],
       list: [
-        ~x"./xsd:list"o,
+        ~x"./xs:list"o,
         item_type: ~x"./@itemType"s
       ],
       union: [
-        ~x"./xsd:union"o,
-        types: ~x"./xsd:simpleType/xsd:restriction/@base"lo
+        ~x"./xs:union"o,
+        types: ~x"./xs:simpleType/xs:restriction/@base"lo
       ]
     )
   end

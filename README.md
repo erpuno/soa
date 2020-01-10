@@ -1,47 +1,46 @@
 # Soap
-[![Build Status](https://travis-ci.org/elixir-soap/soap.svg?branch=master)](https://travis-ci.org/elixir-soap/soap)
-[![Code coverage](https://img.shields.io/coveralls/github/elixir-soap/soap.svg?style=flat)](https://coveralls.io/github/elixir-soap/soap)
-[![Hex version](https://img.shields.io/hexpm/v/soap.svg?style=flat)](https://hex.pm/packages/soap)
-[![Hex license](https://img.shields.io/hexpm/l/soap.svg?style=flat)](https://hex.pm/packages/soap)
-[![Hex downloads](https://img.shields.io/hexpm/dt/soap.svg?style=flat)](https://hex.pm/packages/soap)
+[![Hex version](https://img.shields.io/hexpm/v/soa.svg?style=flat)](https://hex.pm/packages/soa)
 
 SOAP client for Elixir programming language
 
 ## Installation
 
-1) Add `soap` to your deps:
+1) Add `soa` to your deps:
 
 ```elixir
 def deps do
-  [{:soap, "~> 1.0"}]
+  [{:soa, "~> 0.1.0"}]
 end
 ```
-2) Add `soap` to the list of application dependencies(or just use extra_applications):
+2) Add `soa` to the list of application dependencies(or just use extra_applications):
 
 ```elixir
 def application do
-  [applications: [:logger, :soap]]
+  [applications: [:logger, :soa]]
 end
 ```
 
 ## Configuration
 
 Configure version of SOAP protocol. Supported versions `1.1`(default) and `1.2`.
+
 ```elixir
-config :soap, :globals, version: "1.1"
+config :soa, :globals, version: "1.1"
 ```
 
 ## Usage
 
-The documentation is available on [HexDocs](https://hexdocs.pm/soap/api-reference.html).
+The documentation is available on [HexDocs](https://hexdocs.pm/soa/api-reference.html).
 
 Parse WSDL file for execution of actions on its basis:
+
 ```elixir
 iex(1)> {:ok, wsdl} = Soap.init_model(wsdl_path, :url)
 {:ok, parsed_wsdl}
 ```
 
 Get list of available operations:
+
 ```elixir
 iex(2)> Soap.operations(wsdl)
 [
@@ -69,6 +68,7 @@ iex(2)> Soap.operations(wsdl)
 ```
 
 Call action:
+
 ```elixir
 wsdl_path = "http://www.dneonline.com/calculator.asmx?WSDL"
 action = "Add"
@@ -93,21 +93,16 @@ iex(3)> {:ok, response} = Soap.call(wsdl, action, params)
 ```
 
 Parse response:
+
 ```elixir
 iex(4)> Soap.Response.parse(response)
 %{AddResponse: %{AddResult: "3"}}
 ```
-
 To add SOAP headers, pass in a `{headers, params}` tuple instead of just params:
+
 ```elixir
 {:ok, %Soap.Response{}} = Soap.call(wsdl, action, {%{Token: "foo"}, params})
 ```
-
-## Contributing
-We appreciate any contribution and open to [future requests](https://github.com/elixir-soap/soap/pulls).
-
-You can find a list of features and bugs in the [issue tracker](https://github.com/elixir-soap/soap/issues).
-
 ## License
 
-Soap is released under the MIT license, see the [LICENSE](https://github.com/elixir-soap/soap/blob/master/LICENSE) file.
+Soap is released under the MIT license, see the [LICENSE](https://github.com/voxoz/soa/blob/master/LICENSE) file.

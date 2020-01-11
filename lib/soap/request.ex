@@ -18,6 +18,7 @@ defmodule Soap.Request do
     request_headers = Headers.build(wsdl, operation, request_headers)
     body = Params.build_body(wsdl, operation, params, soap_headers)
     request_headers = request_headers |> (Enum.map fn {x,y} -> {b2l(x),b2l(y)} end)
+    IO.inspect {"HTTP",request_headers,body}
     :httpc.request(:post, {url, request_headers, 'text/xml;charset=utf-8', body},
                  [{:relaxed,true},{:timeout,5000}], [{:body_format,:binary}])
   end

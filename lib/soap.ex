@@ -45,7 +45,7 @@ defmodule Soap do
   See `call/5` for more details on how to issue requests to soap services
   """
 
-  alias Soap.{Request, Wsdl}
+  alias Soap.{Request, Response, Wsdl}
 
   @doc """
   Initialization of a WSDL model. Response a map of parsed data from file.
@@ -110,8 +110,8 @@ defmodule Soap do
     wsdl.operations
   end
 
-  defp handle_response({:ok, x}), do: {:ok, x}
-  defp handle_response({:error, x}), do: {:error, x}
+  defp handle_response({:ok, {{_,status,_},_,body}}), do: {:ok, %Response{status_code: status, body: :unicode.characters_to_binary(body)}}
+  defp handle_response({:error, reason}), do: {:error, reason}
 
   defp validate_operation(wsdl, operation) do
     case valid_operation?(wsdl, operation) do

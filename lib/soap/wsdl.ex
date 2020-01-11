@@ -11,6 +11,11 @@ defmodule Soap.Wsdl do
 
   alias Soap.{Type, Xsd}
 
+  def imports do
+    {_,wsdl} = :file.read_file('priv/sevovv/tempuri.org.wsdl')
+    Soap.Wsdl.get_full_paths(wsdl, [], 'wsdl', 'xsd') |> Soap.Wsdl.get_imported_types
+  end
+
   @spec parse_from_file(String.t()) :: {:ok, map()}
   def parse_from_file(path, opts \\ []) do
     {:ok, wsdl} = File.read(path)
@@ -45,6 +50,7 @@ defmodule Soap.Wsdl do
 
   @spec get_schema_namespace(String.t()) :: String.t()
   def get_schema_namespace(wsdl) do
+     IO.inspect (wsdl |> xpath(~x"//namespace::*"l))
     {_, _, _, schema_namespace, _} =
       wsdl
       |> xpath(~x"//namespace::*"l)

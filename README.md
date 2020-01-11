@@ -106,3 +106,7 @@ To add SOAP headers, pass in a `{headers, params}` tuple instead of just params:
 ## License
 
 Soap is released under the MIT license, see the [LICENSE](https://github.com/voxoz/soa/blob/master/LICENSE) file.
+
+## Credits
+
+Petr Stepchenko @Nitrino

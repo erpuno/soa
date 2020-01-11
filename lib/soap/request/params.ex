@@ -135,7 +135,7 @@ defmodule Soap.Request.Params do
       validated_params ->
         body =
           validated_params
-          |> add_header_part_tag_wrapper(wsdl, operation)
+#          |> add_header_part_tag_wrapper(wsdl, operation)
           |> add_header_tag_wrapper
 
         {:ok, body}

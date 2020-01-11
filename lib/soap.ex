@@ -1,6 +1,6 @@
 defmodule Soap do
   @moduledoc """
-  The SOAP client for Elixir based on HTTPoison (for send requests) and SweetXml (for xml parsing).
+  The SOAP client for Elixir based on httpc (for send requests) and SweetXml (for xml parsing).
   Soap contains 5 main modules:
 
     * `Soap.Wsdl` - Build wsdl components data map. Can parse raw wsdl file from external url or local path.
@@ -8,7 +8,7 @@ defmodule Soap do
 
     * `Soap.Request` - Provides functionality for build and calling requests. Contains Request.Headers and Soap.Params
     submodules for build headers and build body with parameters validation respectively.
-    This module is a wrapper over HTTPoison. It send requests and handle them.
+    This module is a wrapper over httpc. It send requests and handle them.
 
     * `Soap.Response` - Handle soap response and handle them. It provides functionality for parsing xml-like body
     and transform it to comfortable structure. Structure for this module returns with necessary data after send
@@ -77,7 +77,7 @@ defmodule Soap do
   - `action`: Soap action to be called. Use `Soap.operations/1` to get a list of available actions
   - `params`: Parameters to build the body of a SOAP request.
   - `headers`: Custom request headers.
-  - `opts`: HTTPoison options.
+  - `opts`: httpc options.
 
   ## Examples
 
@@ -110,15 +110,8 @@ defmodule Soap do
     wsdl.operations
   end
 
-  defp handle_response(
-         {:ok, %HTTPoison.Response{body: body, headers: headers, request_url: request_url, status_code: status_code}}
-       ) do
-    {:ok, %Response{body: body, headers: headers, request_url: request_url, status_code: status_code}}
-  end
-
-  defp handle_response({:error, %HTTPoison.Error{reason: reason}}) do
-    {:error, reason}
-  end
+  defp handle_response({:ok, x}), do: {:ok, x}
+  defp handle_response({:error, x}), do: {:error, x}
 
   defp validate_operation(wsdl, operation) do
     case valid_operation?(wsdl, operation) do

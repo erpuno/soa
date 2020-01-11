@@ -24,8 +24,9 @@ defmodule Soap.Wsdl do
 
   @spec parse_from_url(String.t()) :: {:ok, map()}
   def parse_from_url(path, opts \\ []) do
-    %HTTPoison.Response{body: wsdl} = HTTPoison.get!(path, [], follow_redirect: true, max_redirect: 5)
-    parse(wsdl, path, opts)
+    {:ok,{{_,200,_},_,wsdl}} = 
+    :httpc.request(:get, {(path |> :erlang.binary_to_list),[]},[{:relaxed,true},{:timeout,5000}], [])
+    parse(wsdl |> :erlang.list_to_binary, path, opts)
   end
 
   @spec parse(String.t(), String.t()) :: {:ok, map()}

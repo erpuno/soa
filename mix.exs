@@ -30,7 +30,6 @@ defmodule Soap.MixProject do
     [
       {:ex_doc, "~> 0.11", only: :dev},
       {:sweet_xml, "~> 0.6.5"},
-      {:httpoison, "~> 1.3"},
       {:xml_builder, "~> 2.1"},
     ]
   end

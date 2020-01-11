@@ -4,19 +4,23 @@ defmodule Soap.Request do
   """
   alias Soap.Request.{Headers, Params}
 
+  def b2l(x), do: x |> :erlang.binary_to_list
+
   @doc """
   Executing with parsed wsdl and headers with body map.
-  Calling HTTPoison request by Map with method, url, body, headers, options keys.
+  Calling httpc.request by Map with method, url, body, headers, options keys.
   """
   @spec call(wsdl :: map(), operation :: String.t(), params :: any(), headers :: any(), opts :: any()) :: any()
   def call(wsdl, operation, soap_headers_and_params, request_headers \\ [], opts \\ [])
 
+
   def call(wsdl, operation, {soap_headers, params}, request_headers, opts) do
-    url = get_url(wsdl)
+    url = get_url(wsdl) |> :erlang.binary_to_list
     request_headers = Headers.build(wsdl, operation, request_headers)
     body = Params.build_body(wsdl, operation, params, soap_headers)
-    IO.inspect body
-    HTTPoison.post(url, body, request_headers, opts)
+    request_headers = request_headers |> Enum.map fn {x,y} -> {b2l(x),b2l(y)} end
+    :httpc.request(:post, {url, request_headers, 'text/xml;charset=utf-8', body},
+                 [{:relaxed,true},{:timeout,5000}], [{:body_format,:binary}])
   end
 
   def call(wsdl, operation, params, request_headers, opts),

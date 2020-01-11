@@ -50,7 +50,6 @@ defmodule Soap.Wsdl do
 
   @spec get_schema_namespace(String.t()) :: String.t()
   def get_schema_namespace(wsdl) do
-     IO.inspect (wsdl |> xpath(~x"//namespace::*"l))
     {_, _, _, schema_namespace, _} =
       wsdl
       |> xpath(~x"//namespace::*"l)

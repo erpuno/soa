@@ -34,7 +34,7 @@ defmodule Soap.Xsd do
   end
 
   @spec parse(String.t()) :: {:ok, map()}
-  defp parse_xsd(xsd) do
+  def parse_xsd(xsd) do
     parsed_response = %{
       simple_types: get_simple_types(xsd),
       complex_types: Type.get_complex_types(xsd, "//xs:schema/xs:complexType")
@@ -44,7 +44,7 @@ defmodule Soap.Xsd do
   end
 
   @spec get_simple_types(String.t()) :: list()
-  defp get_simple_types(wsdl) do
+  def get_simple_types(wsdl) do
     wsdl
     |> xpath(
       ~x"//xs:schema/xs:simpleType"l,

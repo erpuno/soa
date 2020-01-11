@@ -23,7 +23,7 @@ defmodule Soap.Request do
     do: call(wsdl, operation, {nil, params}, request_headers, opts)
 
   @spec get_url(wsdl :: map()) :: String.t()
-  defp get_url(wsdl) do
+  def get_url(wsdl) do
     wsdl.endpoint
   end
 end

@@ -32,28 +32,28 @@ defmodule Soap.Response.Parser do
   end
 
   @spec parse_record(tuple()) :: map() | String.t()
-  defp parse_record({:xmlElement, tag_name, _, _, _, _, _, _, elements, _, _, _}) do
+  def parse_record({:xmlElement, tag_name, _, _, _, _, _, _, elements, _, _, _}) do
     %{tag_name => parse_elements(elements)}
   end
 
-  defp parse_record({:xmlText, _, _, _, value, _}), do: transform_record_value(value)
+  def parse_record({:xmlText, _, _, _, value, _}), do: transform_record_value(value)
 
-  defp transform_record_value(nil), do: nil
-  defp transform_record_value(value) when is_list(value), do: value |> to_string() |> String.trim()
-  defp transform_record_value(value) when is_binary(value), do: value |> String.trim()
+  def transform_record_value(nil), do: nil
+  def transform_record_value(value) when is_list(value), do: value |> to_string() |> String.trim()
+  def transform_record_value(value) when is_binary(value), do: value |> String.trim()
 
   @spec parse_elements(list() | tuple()) :: map()
-  defp parse_elements([]), do: %{}
-  defp parse_elements(elements) when is_tuple(elements), do: parse_record(elements)
+  def parse_elements([]), do: %{}
+  def parse_elements(elements) when is_tuple(elements), do: parse_record(elements)
 
-  defp parse_elements(elements) when is_list(elements) do
+  def parse_elements(elements) when is_list(elements) do
     elements
     |> Enum.map(&parse_record/1)
     |> parse_element_values()
   end
 
   @spec parse_element_values(list()) :: any()
-  defp parse_element_values(elements) do
+  def parse_element_values(elements) do
     cond do
       Enum.all?(elements, &is_map/1) && unique_tags?(elements) ->
         Enum.reduce(elements, &Map.merge/2)
@@ -67,10 +67,10 @@ defmodule Soap.Response.Parser do
   end
 
   @spec extract_value_from_list(list()) :: any()
-  defp extract_value_from_list([element]), do: element
-  defp extract_value_from_list(elements), do: elements
+  def extract_value_from_list([element]), do: element
+  def extract_value_from_list(elements), do: elements
 
-  defp unique_tags?(elements) do
+  def unique_tags?(elements) do
     keys =
       elements
       |> Enum.map(&Map.keys/1)
@@ -79,7 +79,7 @@ defmodule Soap.Response.Parser do
     Enum.uniq(keys) == keys
   end
 
-  defp get_envelope_namespace(xml_response) do
+  def get_envelope_namespace(xml_response) do
     env_namespace = @soap_version_namespaces[soap_version()]
 
     xml_response
@@ -88,22 +88,22 @@ defmodule Soap.Response.Parser do
     |> elem(3)
   end
 
-  defp get_fault_tag(xml_response) do
+  def get_fault_tag(xml_response) do
     xml_response
     |> get_envelope_namespace()
     |> List.to_string()
     |> apply_namespace_to_tag("Fault")
   end
 
-  defp get_body_tag(xml_response) do
+  def get_body_tag(xml_response) do
     xml_response
     |> get_envelope_namespace()
     |> List.to_string()
     |> apply_namespace_to_tag("Body")
   end
 
-  defp apply_namespace_to_tag(nil, tag), do: tag
-  defp apply_namespace_to_tag(env_namespace, tag), do: env_namespace <> ":" <> tag
+  def apply_namespace_to_tag(nil, tag), do: tag
+  def apply_namespace_to_tag(env_namespace, tag), do: env_namespace <> ":" <> tag
 
-  defp soap_version, do: Application.fetch_env!(:soa, :globals)[:version]
+  def soap_version, do: Application.fetch_env!(:soa, :globals)[:version]
 end

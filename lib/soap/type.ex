@@ -13,17 +13,17 @@ defmodule Soap.Type do
   end
 
   @spec parse_types(map(), map()) :: map()
-  defp parse_types(type_node, complex_type_acc) do
+  def parse_types(type_node, complex_type_acc) do
     types_map =
       type_node
-      |> xpath(~x"./xsd:sequence/xsd:element"l)
+      |> xpath(~x"./xs:sequence/xs:element"l)
       |> Enum.reduce(%{}, &parse_type_attributes/2)
 
     Map.put(complex_type_acc, type_node |> xpath(~x"./@name"s) |> String.downcase(), types_map)
   end
 
   @spec parse_type_attributes(map(), map()) :: map()
-  defp parse_type_attributes(inner_node, element_acc) do
+  def parse_type_attributes(inner_node, element_acc) do
     result_map =
       [:nillable, :minOccurs, :maxOccurs]
       |> Enum.reduce(%{type: inner_node |> xpath(~x"./@type"s)}, fn attr, init_map_acc ->

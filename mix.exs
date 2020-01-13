@@ -15,6 +15,7 @@ defmodule Soap.MixProject do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
       maintainers: ["Maxim Sokhatsky"],
+      authors: ["Petr Stepchenko"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/voxoz/soa"}
     ]

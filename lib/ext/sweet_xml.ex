@@ -136,7 +136,8 @@ defmodule SwXml do
     get_current_entities(parent, spec) |> spec.transform_fun.()
   end
 
-  def xpath(parent, %SwXpath{is_list: false, is_value: true, cast_to: string_type, is_optional: is_opt?} = spec) when string_type in [:string,:soft_string] do
+  def xpath(parent, %SwXpath{is_list: false, is_value: true, cast_to: string_type, is_optional: is_opt?} = spec) 
+    when string_type in [:string,:soft_string] do
     spec = %SwXpath{spec | is_list: true}
     get_current_entities(parent, spec)
     |> Enum.map(&(_value(&1) |> to_cast(string_type, is_opt?)))

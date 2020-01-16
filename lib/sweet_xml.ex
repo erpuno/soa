@@ -446,13 +446,13 @@ defmodule SwXml do
   end
 
 
-  def xpath(parent, Sw_xpath, subspec) do
-    if Sw_xpath.is_list do
-      current_entities = xpath(parent, Sw_xpath)
-      Enum.map(current_entities, fn (entity) -> xmap(entity, subspec, Sw_xpath) end)
+  def xpath(parent, sw_xpath, subspec) do
+    if sw_xpath.is_list do
+      current_entities = xpath(parent, sw_xpath)
+      Enum.map(current_entities, fn (entity) -> xmap(entity, subspec, sw_xpath) end)
     else
-      current_entity = xpath(parent, Sw_xpath)
-      xmap(current_entity, subspec, Sw_xpath)
+      current_entity = xpath(parent, sw_xpath)
+      xmap(current_entity, subspec, sw_xpath)
     end
   end
 
@@ -521,14 +521,14 @@ defmodule SwXml do
   def xmap(_, [], %{is_keyword: true}), do: []
 
   def xmap(parent, [{label, spec} | tail], is_keyword) when is_list(spec) do
-    [Sw_xpath | subspec] = spec
+    [sw_xpath | subspec] = spec
     result = xmap(parent, tail, is_keyword)
-    put_in result[label], xpath(parent, Sw_xpath, subspec)
+    put_in result[label], xpath(parent, sw_xpath, subspec)
   end
 
-  def xmap(parent, [{label, Sw_xpath} | tail], is_keyword) do
+  def xmap(parent, [{label, sw_xpath} | tail], is_keyword) do
     result = xmap(parent, tail, is_keyword)
-    put_in result[label], xpath(parent, Sw_xpath)
+    put_in result[label], xpath(parent, sw_xpath)
   end
 
   @doc """
@@ -550,8 +550,8 @@ defmodule SwXml do
     ...>    )
     [%{name: "North", wind_speed: 5..15}]
   """
-  def transform_by(%SwXpath{}=Sw_xpath, fun) when is_function(fun) do
-    %{Sw_xpath | transform_fun: fun}
+  def transform_by(%SwXpath{}=sw_xpath, fun) when is_function(fun) do
+    %{sw_xpath | transform_fun: fun}
   end
 
   defp _value(entity) do

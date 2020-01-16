@@ -1,6 +1,6 @@
 defmodule Soap do
   @moduledoc """
-  The SOAP client for Elixir based on httpc (for send requests) and SweetXml (for xml parsing).
+  The SOAP client for Elixir based on httpc (for send requests) and SwXml (for xml parsing).
   Soap contains 5 main modules:
 
     * `Soap.Wsdl` - Build wsdl components data map. Can parse raw wsdl file from external url or local path.

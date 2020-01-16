@@ -3,7 +3,7 @@ defmodule Soap.Xsd do
   Provides functions for parsing xsd file
   """
 
-  import SweetXml, except: [parse: 1]
+  import SwXml, except: [parse: 1]
 
   alias Soap.Type
 

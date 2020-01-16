@@ -7,7 +7,7 @@ defmodule Soap.Wsdl do
     "1.2" => :"http://schemas.xmlsoap.org/wsdl/soap12/"
   }
 
-  import SweetXml, except: [parse: 1, parse: 2]
+  import SwXml, except: [parse: 1, parse: 2]
 
   alias Soap.{Type, Xsd}
 

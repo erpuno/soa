@@ -2,7 +2,7 @@ defmodule Soap.Request.Params do
   @moduledoc """
   Documentation for Soap.Request.Options.
   """
-  import XmlBuilder, only: [element: 3, document: 1, generate: 2]
+  import XmlGen, only: [element: 3, document: 1, generate: 2]
 
   @schema_types %{
     "xmlns:xsd" => "http://www.w3.org/2001/XMLSchema",

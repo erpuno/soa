@@ -3,7 +3,7 @@ defmodule Soap.Response.Parser do
   Provides a functions for parse an xml-like response body.
   """
 
-  import SweetXml, only: [xpath: 2, sigil_x: 2]
+  import SwXml, only: [xpath: 2, sigil_x: 2]
 
   @soap_version_namespaces %{
     "1.1" => :"http://schemas.xmlsoap.org/soap/envelope/",

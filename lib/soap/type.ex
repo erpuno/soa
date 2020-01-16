@@ -3,7 +3,7 @@ defmodule Soap.Type do
   Provides functions for parsing types to struct
   """
 
-  import SweetXml, except: [parse: 1]
+  import SwXml, except: [parse: 1]
 
   @spec get_complex_types(String.t(), String.t()) :: list()
   def get_complex_types(wsdl, x_path) do

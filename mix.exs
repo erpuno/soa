@@ -4,7 +4,7 @@ defmodule Soap.MixProject do
   def project do
     [
       app: :soa,
-      version: "0.1.5",
+      version: "0.1.6",
       deps: deps(),
       package: package(),
       description: "SOA Simple Object Access Protocol",
@@ -18,7 +18,7 @@ defmodule Soap.MixProject do
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
       maintainers: ["Maxim Sokhatsky"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/voxoz/soa"}
+      links: %{"GitHub" => "https://github.com/erpuno/soa"}
     ]
   end
 end

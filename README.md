@@ -110,3 +110,5 @@ Soap is released under the MIT license, see the [LICENSE](https://github.com/vox
 ## Credits
 
 Petr Stepchenko @Nitrino
+Iryna Kostiuk
+Maxim Sokhatsky @5HT

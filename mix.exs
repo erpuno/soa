@@ -4,7 +4,7 @@ defmodule Soap.MixProject do
   def project do
     [
       app: :soa,
-      version: "0.1.6",
+      version: "0.1.7",
       deps: deps(),
       package: package(),
       description: "SOA Simple Object Access Protocol",

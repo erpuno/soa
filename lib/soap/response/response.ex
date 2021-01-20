@@ -21,6 +21,7 @@ defmodule Soap.Response do
   """
   @spec parse(__MODULE__.t() | String.t(), integer()) :: map()
   def parse(%Soap.Response{body: body, status_code: status_code}), do: parse(body, status_code)
+  def parse(body, :header), do: Parser.parse(body, :header)
   def parse(body, status_code) when status_code >= 400, do: Parser.parse(body, :fault)
   def parse(body, _status_code), do: Parser.parse(body, :successful)
 end

@@ -23,6 +23,14 @@ defmodule Soap.Response.Parser do
     |> parse_elements()
   end
 
+  def parse(xml_response, :header) do
+    body_tag = get_header_tag(xml_response)
+
+    xml_response
+    |> xpath(~x"//#{body_tag}/*"l)
+    |> parse_elements()
+  end
+
   def parse(xml_response, _response_type) do
     body_tag = get_body_tag(xml_response)
 
@@ -100,6 +108,13 @@ defmodule Soap.Response.Parser do
     |> get_envelope_namespace()
     |> List.to_string()
     |> apply_namespace_to_tag("Body")
+  end
+
+  def get_header_tag(xml_response) do
+    xml_response
+    |> get_envelope_namespace()
+    |> List.to_string()
+    |> apply_namespace_to_tag("Header")
   end
 
   def apply_namespace_to_tag(nil, tag), do: tag

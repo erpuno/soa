@@ -13,7 +13,7 @@ defmodule Soap.Request do
   @spec call(wsdl :: map(), operation :: String.t(), params :: any(), headers :: any(), opts :: any()) :: any()
   def call(wsdl, operation, {soap_headers, params}, request_headers, _opts) do
     url = # get_url(wsdl)
-          :application.get_env(:sms_trembita, :trembita_gateway, "http://10.20.60.30:80/")
+          :application.get_env(:soa, :soap_gateway, "http://10.20.60.30:80/")
           |> :erlang.binary_to_list
     request_headers = Headers.build(wsdl, operation, request_headers)
     body = Params.build_body(wsdl, operation, params, soap_headers)

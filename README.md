@@ -3,7 +3,7 @@
 
 SOAP client for Elixir programming language developed for using in Ukrainian Governmental Systems of Diia State Enterprise:
 * СЕВДЕІР (Трембіта)
-* СЕВ ОВВ
+* СЕВ ОВВ (production ready)
 
 ## Installation
 

@@ -1,7 +1,9 @@
 # SOA
 [![Hex version](https://img.shields.io/hexpm/v/soa.svg?style=flat)](https://hex.pm/packages/soa)
 
-SOAP client for Elixir programming language
+SOAP client for Elixir programming language used in Ukrainian Governmental Systems of Diia State Enterprise:
+* СЕВДЕІР (Трембіта)
+* СЕВ ОВВ
 
 ## Installation
 

@@ -19,8 +19,8 @@ defmodule Soap do
     wsdl.operations
   end
 
-  defp handle_response({:ok, {{_,status,_},_,body}}), do: {:ok, %Response{status_code: status, body: :unicode.characters_to_binary(body)}}
-  defp handle_response({:error, reason}), do: {:error, reason}
+  def handle_response({:ok, {{_,status,_},_,body}}), do: {:ok, %Response{status_code: status, body: :unicode.characters_to_binary(body)}}
+  def handle_response({:error, reason}), do: {:error, reason}
 
   defp validate_operation(wsdl, operation) do
     case valid_operation?(wsdl, operation) do

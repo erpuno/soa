@@ -220,7 +220,7 @@ defmodule Soap.Wsdl do
     )
   end
 
-  def soap_version, do: Application.fetch_env!(:soa, :globals)[:version]
+  def soap_version, do: Application.fetch_env!(:sms_trembita, :globals)[:version]
   def soap_version(opts) when is_list(opts), do: Keyword.get(opts, :soap_version, soap_version())
 
   def ns(name, []), do: "#{name}"

@@ -12,7 +12,7 @@ defmodule Soap.MixProject do
   end
 
   def deps, do: [{:ex_doc, "~> 0.11", only: :dev}]
-  def application, do: [extra_applications: [:logger] ]
+  def application, do: [extra_applications: [:logger, :xmerl] ]
   def package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],

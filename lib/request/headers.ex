@@ -10,24 +10,19 @@ defmodule Soap.Request.Headers do
 
   """
 
-  @spec build(map(), String.t(), list()) :: list()
   def build(wsdl, operation, custom_headers) do
-    wsdl
-    |> extract_soap_action_by_operation(operation)
-    |> extract_headers(custom_headers)
+      wsdl |> extract_soap_action_by_operation(operation) |> extract_headers(custom_headers)
   end
 
-  @spec extract_soap_action_by_operation(map(), String.t()) :: String.t()
   def extract_soap_action_by_operation(wsdl, operation) do
-    Enum.find(wsdl[:operations], fn x -> x[:name] == operation end)[:soap_action]
+      Enum.find(wsdl[:operations], fn x -> x[:name] == operation end)[:soap_action]
   end
 
-  @spec extract_headers(String.t(), list()) :: list()
   def extract_headers(soap_action, []), do: base_headers(soap_action)
   def extract_headers(_, custom_headers), do: custom_headers
 
-  @spec base_headers(String.t()) :: list()
   def base_headers(soap_action) do
-    [{"SOAPAction", soap_action}, {"Content-Type", "text/xml;charset=utf-8"}]
+      [{"SOAPAction", soap_action}, {"Content-Type", "text/xml;charset=utf-8"}]
   end
+
 end

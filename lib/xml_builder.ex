@@ -15,13 +15,21 @@ defmodule XmlGen do
   def document(elements), do: [:xml_decl | elements_with_prolog(elements) |> List.wrap]
   def document(name, attrs_or_content), do: [:xml_decl | [element(name, attrs_or_content)]]
   def document(name, attrs, content), do: [:xml_decl | [element(name, attrs, content)]]
-
   def element(name) when is_bitstring(name), do: element({nil, nil, name})
   def element(name) when is_bitstring(name) or is_atom(name), do: element({name})
   def element(list) when is_list(list), do: Enum.map(list, &element/1)
   def element({name}), do: element({name, nil, nil})
   def element({name, attrs}) when is_map(attrs), do: element({name, attrs, nil})
-  def element({name, content}), do: element({name, nil, content})
+  def element({name, content}) when is_list(content) do element({name, nil, content}) end
+  def element({"client", nil, content}) when is_list(content),  do: {"xro:client",  [{:"iden:objectType","SUBSYSTEM"}], Enum.map(content, &element/1)}
+  def element({"service", nil, content}) when is_list(content), do: {"xro:service", [{:"iden:objectType","SERVICE"}],   Enum.map(content, &element/1)}
+  def element({"protocolVersion", nil, content}), do: {"xro:protocolVersion", [], content}
+  def element({"id", nil, content}),              do: {"xro:id",              [], content}
+  def element({"userId", nil, content}),          do: {"xro:userId",          [], content}
+  def element({"xRoadInstance", nil, content}),   do: {"iden:xRoadInstance",  [], content}
+  def element({"memberClass", nil, content}),     do: {"iden:memberClass:",   [], content}
+  def element({"memberCode", nil, content}),      do: {"iden:memberCode",     [], content}
+  def element({"subsystemCode", nil, content}),   do: {"iden:subsystemCode",  [], content}
   def element({name, attrs, content}) when is_list(content), do: {name, attrs, Enum.map(content, &element/1)}
   def element({name, attrs, content}), do: {name, attrs, content}
   def element(name, attrs) when is_map(attrs), do: element({name, attrs, nil})

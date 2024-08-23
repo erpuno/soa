@@ -120,5 +120,5 @@ defmodule Soap.Response.Parser do
   def apply_namespace_to_tag(nil, tag), do: tag
   def apply_namespace_to_tag(env_namespace, tag), do: env_namespace <> ":" <> tag
 
-  def soap_version, do: Application.fetch_env!(:soa, :globals)[:version]
+  def soap_version, do: Application.fetch_env!(:sms_trembita, :globals)[:version]
 end

@@ -5,8 +5,8 @@ defmodule Soap.Request.Params do
   import XmlGen, only: [element: 3, document: 1, generate: 2]
 
   @schema_types %{
-    "xmlns:xsd" => "http://www.w3.org/2001/XMLSchema",
-    "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance"
+    "xmlns:xro"  => "http://x-road.eu/xsd/xroad.xsd",
+    "xmlns:iden" => "http://x-road.eu/xsd/identifiers"
   }
   @soap_version_namespaces %{
     "1.1" => "http://schemas.xmlsoap.org/soap/envelope/",
@@ -127,7 +127,7 @@ defmodule Soap.Request.Params do
     end
   end
 
-  def build_soap_header(wsdl, operation, headers) do
+  def build_soap_header(_wsdl, _operation, headers) do
     case headers |> construct_xml_request_header do
       {:error, messages} ->
         {:error, messages}
@@ -135,7 +135,7 @@ defmodule Soap.Request.Params do
       validated_params ->
         body =
           validated_params
-#          |> add_header_part_tag_wrapper(wsdl, operation)
+#         |> add_header_part_tag_wrapper(wsdl, operation)
           |> add_header_tag_wrapper
 
         {:ok, body}
@@ -192,7 +192,6 @@ defmodule Soap.Request.Params do
   @spec add_action_tag_wrapper(list(), map(), String.t()) :: list()
   def add_action_tag_wrapper(body, wsdl, operation) do
     action_tag_attributes = handle_element_form_default(wsdl[:schema_attributes])
-
     action_tag =
       wsdl
       |> get_action_with_namespace(operation)
@@ -204,7 +203,6 @@ defmodule Soap.Request.Params do
   @spec add_header_part_tag_wrapper(list(), map(), String.t()) :: list()
   def add_header_part_tag_wrapper(body, wsdl, operation) do
     action_tag_attributes = handle_element_form_default(wsdl[:schema_attributes])
-
     case get_header_with_namespace(wsdl, operation) do
       nil ->
         nil
@@ -262,10 +260,15 @@ defmodule Soap.Request.Params do
   end
 
   @spec add_body_tag_wrapper(list()) :: list()
-  def add_body_tag_wrapper(body), do: [element(:"#{env_namespace()}:Body", nil, body)]
+  def add_body_tag_wrapper(body) do
+      :io.format 'Tag Wrapper: ~p~n', [body]
+      [element(:"#{env_namespace()}:Body", nil, body)]
+  end
 
   @spec add_header_tag_wrapper(list()) :: list()
-  def add_header_tag_wrapper(body), do: [element(:"#{env_namespace()}:Header", nil, body)]
+  def add_header_tag_wrapper(body) do
+      [element(:"#{env_namespace()}:Header", nil, body)]
+  end
 
   @spec add_envelope_tag_wrapper(body :: any(), wsdl :: map(), operation :: String.t()) :: any()
   def add_envelope_tag_wrapper(body, wsdl, operation) do
@@ -298,9 +301,9 @@ defmodule Soap.Request.Params do
   end
 
   def soap_version(wsdl) do
-    Map.get(wsdl, :soap_version, Application.fetch_env!(:soa, :globals)[:version])
+    Map.get(wsdl, :soap_version, Application.fetch_env!(:sms_trembita, :globals)[:version])
   end
 
-  def env_namespace, do: Application.fetch_env!(:soa, :globals)[:env_namespace] || :env
-  def custom_namespaces, do: Application.fetch_env!(:soa, :globals)[:custom_namespaces] || %{}
+  def env_namespace, do: Application.fetch_env!(:sms_trembita, :globals)[:env_namespace] || :env
+  def custom_namespaces, do: Application.fetch_env!(:sms_trembita, :globals)[:custom_namespaces] || %{}
 end
